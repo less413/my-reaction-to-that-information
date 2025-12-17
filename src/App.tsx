@@ -14,14 +14,14 @@ const theme = createTheme({
     },
 });
 
-const App: React.FC = () => {
+const Meow: React.FC = () => {
     return (
         <div className="App">
             <ThemeProvider theme={theme}>
                 <BrowserRouter>
                     <Routes>
+                        <Route path="/thread/1/cooler" element={<StyledThreadView />} />
                         <Route path="/thread/1" element={<BasicThreadView />} />
-                        <Route path="/thread/1/styled" element={<StyledThreadView />} />
                         <Route path="/" element={<Home />} />
                     </Routes>
                 </BrowserRouter>
@@ -30,4 +30,4 @@ const App: React.FC = () => {
     );
 };
 
-export default App;
+export default Meow;

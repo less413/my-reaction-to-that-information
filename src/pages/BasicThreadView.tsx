@@ -37,7 +37,7 @@ const BasicThreadView: React.FC = () => {
                 }}
             />
             {isShowButton && (
-                <Button variant="contained" color="primary" component={Link} to="/thread/1/styled">
+                <Button variant="contained" color="primary" component={Link} to="/thread/1/cooler">
                     {"Yes"}
                 </Button>
             )}
