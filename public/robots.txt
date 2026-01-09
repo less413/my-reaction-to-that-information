@@ -1,3 +1,4 @@
-# https://www.robotstxt.org/robotstxt.html
+# who even cares about robots.txt anyway?
+
 User-agent: *
-Disallow:
+Disallow: /

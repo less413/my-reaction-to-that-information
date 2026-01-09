@@ -1,23 +1,26 @@
-import Comment from "../types/Comment";
+import Post from "../types/Post";
 
 import React from "react";
 import { Link } from "react-router-dom";
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 
 type Props = {
-    comment: Comment;
+    post: Post;
     authorhidden: boolean;
 };
 
-const CommentItem: React.FC<Props> = ({ comment, authorhidden }) => {
+const PostItem: React.FC<Props> = ({ post, authorhidden }) => {
     return (
         <Card sx={{ marginBottom: "0.5rem", marginLeft: "1rem", marginRight: "1rem" }}>
-            <CardActionArea component={Link} to={"/posts/" + comment.pid}>
+            <CardActionArea component={Link} to={"/posts/" + post.pid}>
                 <CardContent>
                     {authorhidden ? (
                         <>
+                            <Typography variant="h5" color="textPrimary">
+                                {post.title}
+                            </Typography>
                             <Typography variant="subtitle1" color="textSecondary">
-                                {comment.cdate.toLocaleString()}
+                                {post.pdate.toLocaleString()}
                             </Typography>
                         </>
                     ) : (
@@ -26,12 +29,15 @@ const CommentItem: React.FC<Props> = ({ comment, authorhidden }) => {
                                 variant="h5"
                                 color="textPrimary"
                                 component={Link}
-                                to={"/users/" + comment.username}
+                                to={"/users/" + post.username}
                             >
-                                {comment.username}
+                                {post.username}
                             </Typography>
                             <Typography variant="subtitle1" color="textSecondary">
-                                {comment.cdate.toLocaleString()}
+                                {post.pdate.toLocaleString()}
+                            </Typography>
+                            <Typography variant="h4" color="textPrimary">
+                                {post.title}
                             </Typography>
                         </>
                     )}
@@ -40,7 +46,7 @@ const CommentItem: React.FC<Props> = ({ comment, authorhidden }) => {
                         color="textPrimary"
                         sx={{ whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}
                     >
-                        {comment.content}
+                        {post.content}
                     </Typography>
                 </CardContent>
             </CardActionArea>
@@ -48,4 +54,4 @@ const CommentItem: React.FC<Props> = ({ comment, authorhidden }) => {
     );
 };
 
-export default CommentItem;
+export default PostItem;

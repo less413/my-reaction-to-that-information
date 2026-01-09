@@ -1,9 +1,45 @@
-import BasicCommentList from "../components/CommentList";
+import CommentList from "../components/CommentList";
+import Comment from "../types/Comment";
 import { Button, Card, CardContent, Fade, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import Typewriter from "typewriter-effect";
 
 import React, { useState } from "react";
+
+const comments: Comment[] = [
+    {
+        cid: 67,
+        content:
+            "Any fool can write code that a computer can understand.\n" +
+            "Good programmers write code that humans can understand.\n" +
+            " ~ Martin Fowler",
+        username: "Benedict",
+        cdate: new Date(2022, 10, 28, 10, 33, 30),
+        pid: 67,
+    },
+    {
+        cid: 671,
+        content:
+            "Code reuse is the Holy Grail of Software Engineering.\n" +
+            " ~ Douglas Crockford\n" +
+            "Code reuse is the Holy Grail of Software Engineering.\n" +
+            " ~ Douglas Crockford\n" +
+            "Code reuse is the Holy Grail of Software Engineering.\n" +
+            " ~ Douglas Crockford\n" +
+            "Code reuse is the Holy Grail of Software Engineering.\n" +
+            " ~ Douglas Crockford",
+        username: "Casey",
+        cdate: new Date(2022, 11, 1, 11, 11, 11),
+        pid: 67,
+    },
+    {
+        cid: 672,
+        content: "Nine people can't make a baby in a month.\n" + " ~ Fred Brooks",
+        username: "Dueet",
+        cdate: new Date(2022, 11, 2, 10, 30, 0),
+        pid: 67,
+    },
+];
 
 const StyledThreadView: React.FC = () => {
     const [isShowTips, setIsShowTips] = useState(false);
@@ -13,7 +49,7 @@ const StyledThreadView: React.FC = () => {
     };
 
     return (
-        <div style={{ width: "30vw", margin: "auto" }}>
+        <div style={{ width: "40vw", margin: "auto" }}>
             <Typography style={{ padding: "1em 0" }}>
                 <Typewriter
                     onInit={(typewriter) => {
@@ -50,7 +86,7 @@ const StyledThreadView: React.FC = () => {
                 </CardContent>
             </Card>
 
-            <BasicCommentList styled={true} />
+            <CommentList comments={comments} authorhidden={false} />
 
             <Link to="/">
                 <Button variant="contained" color="secondary">
