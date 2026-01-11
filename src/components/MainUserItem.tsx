@@ -11,6 +11,9 @@ const MainUserItem: React.FC<Props> = ({ user }) => {
     return (
         <Card sx={{ marginBottom: "0.5rem", marginLeft: "1rem", marginRight: "1rem" }}>
             <CardContent>
+                <Typography variant="h6" color="textSecondary">
+                    {"user"}
+                </Typography>
                 <Typography color="textPrimary" variant="h2">
                     {user.username}
                 </Typography>

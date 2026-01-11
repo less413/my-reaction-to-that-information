@@ -11,10 +11,13 @@ const MainTopicItem: React.FC<Props> = ({ topic }) => {
     return (
         <Card sx={{ marginBottom: "0.5rem", marginLeft: "1rem", marginRight: "1rem" }}>
             <CardContent>
+                <Typography variant="h6" color="textSecondary">
+                    {"topic"}
+                </Typography>
                 <Typography variant="h2" color="textPrimary">
                     {topic.topicname}
                 </Typography>
-                <Typography variant="body1" color="textPrimary">
+                <Typography variant="h5" color="textPrimary">
                     {topic.description}
                 </Typography>
             </CardContent>

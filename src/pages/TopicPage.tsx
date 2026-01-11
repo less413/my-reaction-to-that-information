@@ -2,8 +2,9 @@ import Topic from "../types/Topic";
 import MainTopicItem from "../components/MainTopicItem";
 import Post from "../types/Post";
 import PostList from "../components/PostList";
-import { fetchPostsByTopic } from "../api/posts";
-import fetchTopics from "../api/topics";
+import NewPostButton from "../components/NewPostButton";
+import { getPostsByTopic } from "../api/posts";
+import { getTopics } from "../api/topics";
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
@@ -22,10 +23,10 @@ const TopicPage: React.FC = () => {
             setError("no topic name??");
             return;
         }
-        Promise.all([fetchTopics(topicname), fetchPostsByTopic(topicname)])
+        Promise.all([getTopics(topicname), getPostsByTopic(topicname)])
             .then(([topics, posts]) => {
                 setTopics(topics);
-                setPosts(posts);
+                setPosts(posts.sort((a, b) => b.pdate.valueOf() - a.pdate.valueOf())); // most recent first
             })
             .catch((err) => setError(err.message))
             .finally(() => setReady(true));
@@ -47,6 +48,7 @@ const TopicPage: React.FC = () => {
     return (
         <div style={{ width: "100vw", maxWidth: "80vh", margin: "auto", textAlign: "left" }}>
             <MainTopicItem topic={topics[0]} />
+            <NewPostButton topic={topics[0]} />
             <PostList posts={posts} authorhidden={false} />
         </div>
     );

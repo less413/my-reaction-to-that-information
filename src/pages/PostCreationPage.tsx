@@ -1,17 +1,26 @@
 import Topic from "../types/Topic";
-import TopicList from "../components/TopicList";
+import MainTopicItem from "../components/MainTopicItem";
+// import Post from "../types/Post";
+import NewPostField from "../components/NewPostField";
 import { getTopics } from "../api/topics";
 
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 
-const Home: React.FC = () => {
+const PostCreationPage: React.FC = () => {
+    const { topicname } = useParams();
+
     const [topics, setTopics] = useState<Topic[] | null>(null);
     const [ready, setReady] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         setReady(false);
-        getTopics(undefined)
+        if (topicname === undefined) {
+            setError("no topic name??");
+            return;
+        }
+        getTopics(topicname)
             .then(setTopics)
             .catch((err) => setError(err.message))
             .finally(() => setReady(true));
@@ -26,11 +35,13 @@ const Home: React.FC = () => {
     if (!topics || topics.length === 0) {
         return <div>{"no topic"}</div>;
     }
+
     return (
         <div style={{ width: "100vw", maxWidth: "80vh", margin: "auto", textAlign: "left" }}>
-            <TopicList topics={topics} />
+            <MainTopicItem topic={topics[0]} />
+            <NewPostField topic={topics[0]} />
         </div>
     );
 };
 
-export default Home;
+export default PostCreationPage;

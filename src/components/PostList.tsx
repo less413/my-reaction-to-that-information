@@ -12,7 +12,7 @@ const PostList: React.FC<Props> = ({ posts, authorhidden }: Props) => {
     return (
         <ul>
             {posts.map((post) => (
-                <PostItem post={post} authorhidden={authorhidden} key="" />
+                <PostItem post={post} authorhidden={authorhidden} key={post.pid} />
             ))}
         </ul>
     );

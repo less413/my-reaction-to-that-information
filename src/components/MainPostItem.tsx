@@ -12,6 +12,12 @@ const MainPostItem: React.FC<Props> = ({ post }) => {
     return (
         <Card sx={{ marginBottom: "0.5rem", marginLeft: "1rem", marginRight: "1rem" }}>
             <CardContent>
+                <Typography variant="body1" color="textSecondary">
+                    {"posted under "}
+                    <Link to={"/topics/" + post.topicname} style={{ color: "inherit" }}>
+                        {post.topicname}
+                    </Link>
+                </Typography>
                 <Typography variant="h5" color="textPrimary" component={Link} to={"/users/" + post.username}>
                     {post.username}
                 </Typography>

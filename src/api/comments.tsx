@@ -1,19 +1,27 @@
 import api from "./caller";
 import Comment from "../types/Comment";
+import IdResponse from "../types/IdResponse";
 
-async function fetchComment(cid: number): Promise<Comment[]> {
+const processDate = (comment: Comment) => ({ ...comment, cdate: new Date(comment.cdate) });
+
+async function getComment(cid: number): Promise<Comment[]> {
     const response = await api.get<Comment[]>("/comments", { params: { cid: cid } });
-    return response.data;
+    return response.data.map(processDate);
 }
 
-async function fetchCommentsByPostId(pid: number): Promise<Comment[]> {
+async function getCommentsByPostId(pid: number): Promise<Comment[]> {
     const response = await api.get<Comment[]>("/comments", { params: { pid: pid } });
+    return response.data.map(processDate);
+}
+
+async function getCommentsByUser(uname: string): Promise<Comment[]> {
+    const response = await api.get<Comment[]>("/comments", { params: { username: uname } });
+    return response.data.map(processDate);
+}
+
+async function postComment(comment: Comment): Promise<IdResponse[]> {
+    const response = await api.post("/comments", comment);
     return response.data;
 }
 
-async function fetchCommentsByUser(uname: string): Promise<Comment[]> {
-    const response = await api.get<Comment[]>("/comments", { params: { topicname: uname } });
-    return response.data;
-}
-
-export { fetchComment, fetchCommentsByPostId, fetchCommentsByUser };
+export { getComment, getCommentsByPostId, getCommentsByUser, postComment };

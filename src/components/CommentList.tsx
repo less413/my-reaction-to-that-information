@@ -12,7 +12,7 @@ const CommentList: React.FC<Props> = ({ comments, authorhidden }: Props) => {
     return (
         <ul>
             {comments.map((comment) => (
-                <CommentItem comment={comment} authorhidden={authorhidden} key="" />
+                <CommentItem comment={comment} authorhidden={authorhidden} key={comment.cid} />
             ))}
         </ul>
     );

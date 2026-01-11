@@ -1,7 +1,7 @@
 import api from "./caller";
 import Topic from "../types/Topic";
 
-async function fetchTopics(tname: string | undefined): Promise<Topic[]> {
+async function getTopics(tname: string | undefined): Promise<Topic[]> {
     if (tname != undefined) {
         const response = await api.get<Topic[]>("/topics", { params: { topicname: tname } });
         return response.data;
@@ -11,4 +11,4 @@ async function fetchTopics(tname: string | undefined): Promise<Topic[]> {
     }
 }
 
-export default fetchTopics;
+export { getTopics };

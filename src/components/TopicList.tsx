@@ -11,7 +11,7 @@ const TopicList: React.FC<Props> = ({ topics }: Props) => {
     return (
         <ul>
             {topics.map((topic) => (
-                <TopicItem topic={topic} key="" />
+                <TopicItem topic={topic} key={topic.topicname} />
             ))}
         </ul>
     );

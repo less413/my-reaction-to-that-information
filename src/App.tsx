@@ -1,9 +1,12 @@
 import Home from "./pages/Home";
-import BasicThreadView from "./pages/BasicThreadView";
+import TopicPage from "./pages/TopicPage";
+import PostCreationPage from "./pages/PostCreationPage";
 import PostPage from "./pages/PostPage";
+import UserPage from "./pages/UserPage";
+import BasicThreadView from "./pages/BasicThreadView";
 import StyledThreadView from "./pages/StyledThreadView";
 import Test from "./pages/Test";
-import TopicPage from "./pages/TopicPage";
+
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -25,10 +28,12 @@ const Meow: React.FC = () => {
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/topics/:topicname" element={<TopicPage />} />
+                        <Route path="/topics/:topicname/newpost" element={<PostCreationPage />} />
                         <Route path="/posts/:pid" element={<PostPage />} />
-                        <Route path="/thread/1" element={<BasicThreadView />} />
+                        <Route path="/users/:username" element={<UserPage />} />
                         <Route path="/test" element={<Test />} />
-                        <Route path="/thread/1/cooler" element={<StyledThreadView />} />
+                        <Route path="/test/1" element={<BasicThreadView />} />
+                        <Route path="/test/2" element={<StyledThreadView />} />
                     </Routes>
                 </BrowserRouter>
             </ThemeProvider>

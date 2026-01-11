@@ -1,37 +1,39 @@
 import Post from "../types/Post";
-import MainPostItem from "../components/MainPostItem";
 import Comment from "../types/Comment";
-import CommentList from "../components/CommentList";
-import NewCommentField from "../components/NewCommentField";
-import { getCommentsByPostId } from "../api/comments";
-import { getPost } from "../api/posts";
+import User from "../types/User";
+import UserTabs from "../components/UserTabs";
+import MainUserItem from "../components/MainUserItem";
+import { getPostsByUser } from "../api/posts";
+import { getCommentsByUser } from "../api/comments";
+import { getUser } from "../api/users";
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
-const PostPage: React.FC = () => {
-    const { pid } = useParams();
+const UserPage: React.FC = () => {
+    const { username } = useParams();
 
+    const [users, setUsers] = useState<User[] | null>(null);
     const [posts, setPosts] = useState<Post[] | null>(null);
     const [comments, setComments] = useState<Comment[] | null>(null);
     const [ready, setReady] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [refresh, setRefresh] = useState<boolean>(false);
 
     useEffect(() => {
         setReady(false);
-        if (pid === undefined) {
-            setError("no post id??");
+        if (username === undefined) {
+            setError("no username??");
             return;
         }
-        Promise.all([getPost(Number(pid)), getCommentsByPostId(Number(pid))])
-            .then(([posts, comments]) => {
-                setPosts(posts);
+        Promise.all([getUser(username), getPostsByUser(username), getCommentsByUser(username)])
+            .then(([users, posts, comments]) => {
+                setUsers(users);
+                setPosts(posts.sort((a, b) => b.pdate.valueOf() - a.pdate.valueOf())); // most recent first
                 setComments(comments.sort((a, b) => b.cdate.valueOf() - a.cdate.valueOf())); // most recent first
             })
             .catch((err) => setError(err.message))
             .finally(() => setReady(true));
-    }, [refresh]);
+    }, []);
 
     if (!ready) {
         return <div>{"BE PATIENT"}</div>;
@@ -39,7 +41,10 @@ const PostPage: React.FC = () => {
     if (error) {
         return <div>{"oh no theres an error, here it is: " + error}</div>;
     }
-    if (!posts || posts.length === 0) {
+    if (!users || users.length === 0) {
+        return <div>{"no user"}</div>;
+    }
+    if (!posts) {
         return <div>{"no post"}</div>;
     }
     if (!comments) {
@@ -48,11 +53,10 @@ const PostPage: React.FC = () => {
 
     return (
         <div style={{ width: "100vw", maxWidth: "80vh", margin: "auto", textAlign: "left" }}>
-            <MainPostItem post={posts[0]} />
-            <NewCommentField post={posts[0]} setRefresh={setRefresh} />
-            <CommentList comments={comments} authorhidden={false} />
+            <MainUserItem user={users[0]} />
+            <UserTabs user={users[0]} posts={posts} comments={comments} />
         </div>
     );
 };
 
-export default PostPage;
+export default UserPage;
