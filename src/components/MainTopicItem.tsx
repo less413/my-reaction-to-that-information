@@ -6,7 +6,6 @@ import { useAuth } from "../context/AuthContext";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, Dialog, IconButton, Typography } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 type Props = {
@@ -19,12 +18,7 @@ const MainTopicItem: React.FC<Props> = ({ topic }) => {
     const canDelete = canEdit;
     const navigate = useNavigate();
 
-    const [editing, setEditing] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-
-    function handleEditButtonClick() {
-        setEditing((x) => !x);
-    }
 
     async function handleDeleteTopic() {
         deleteTopic(topic.topicname)
@@ -39,8 +33,6 @@ const MainTopicItem: React.FC<Props> = ({ topic }) => {
     function handleCloseDeleteDialog() {
         setDeleteDialogOpen(false);
     }
-
-    editing;
 
     return (
         <Card className={"main-card"}>
@@ -59,27 +51,20 @@ const MainTopicItem: React.FC<Props> = ({ topic }) => {
                     </>
                 }
                 action={
-                    <>
-                        {canEdit && (
-                            <IconButton onClick={handleEditButtonClick}>
-                                <EditIcon />
+                    canDelete && (
+                        <>
+                            <IconButton onClick={handleOpenDeleteDialog}>
+                                <DeleteIcon />
                             </IconButton>
-                        )}
-                        {canDelete && (
-                            <>
-                                <IconButton onClick={handleOpenDeleteDialog}>
-                                    <DeleteIcon />
-                                </IconButton>
-                                <Dialog open={deleteDialogOpen} onClose={handleCloseDeleteDialog}>
-                                    <DeleteDialogContent
-                                        contentText="Are you sure you want to delete this topic? EVERYTHING (all posts and comments under this topic) will be deleted!"
-                                        handleCancel={handleCloseDeleteDialog}
-                                        handleDelete={handleDeleteTopic}
-                                    />
-                                </Dialog>
-                            </>
-                        )}
-                    </>
+                            <Dialog open={deleteDialogOpen} onClose={handleCloseDeleteDialog}>
+                                <DeleteDialogContent
+                                    contentText="Are you sure you want to delete this topic? EVERYTHING (all posts and comments under this topic) will be deleted!"
+                                    handleCancel={handleCloseDeleteDialog}
+                                    handleDelete={handleDeleteTopic}
+                                />
+                            </Dialog>
+                        </>
+                    )
                 }
             />
             <CardContent>
