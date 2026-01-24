@@ -19,11 +19,17 @@ async function getPostsByUser(uname: string): Promise<Post[]> {
     return response.data.map(processDate);
 }
 
+async function deletePost(pid: number): Promise<void> {
+    await api.delete("/posts", { params: { pid: pid } });
+}
+
 async function postPost(post: Post): Promise<IdResponse[]> {
     const response = await api.post<IdResponse[]>("/posts", post);
-    console.log("cool its done");
-    console.log(response.data);
     return response.data;
 }
 
-export { getPost, getPostsByTopic, getPostsByUser, postPost };
+async function putPost(post: Post): Promise<void> {
+    await api.put<IdResponse[]>("/posts", post);
+}
+
+export { getPost, getPostsByTopic, getPostsByUser, deletePost, postPost, putPost };

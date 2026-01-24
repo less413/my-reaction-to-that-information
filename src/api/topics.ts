@@ -11,4 +11,12 @@ async function getTopics(tname: string | undefined): Promise<Topic[]> {
     }
 }
 
-export { getTopics };
+async function deleteTopic(topicname: string): Promise<void> {
+    await api.delete("/topics", { params: { topicname: topicname } });
+}
+
+async function postTopic(topic: Topic): Promise<void> {
+    await api.post("/topics", topic);
+}
+
+export { getTopics, deleteTopic, postTopic };

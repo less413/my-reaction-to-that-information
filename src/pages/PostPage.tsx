@@ -1,7 +1,8 @@
+import PageLayout from "../components/PageLayout";
 import Post from "../types/Post";
 import MainPostItem from "../components/MainPostItem";
 import Comment from "../types/Comment";
-import CommentList from "../components/CommentList";
+import MainCommentList from "../components/MainCommentList";
 import NewCommentField from "../components/NewCommentField";
 import { getCommentsByPostId } from "../api/comments";
 import { getPost } from "../api/posts";
@@ -29,7 +30,7 @@ const PostPage: React.FC = () => {
                 setPosts(posts);
                 setComments(comments.sort((a, b) => b.cdate.valueOf() - a.cdate.valueOf())); // most recent first
             })
-            .catch((err) => setError(err.message))
+            .catch((err) => setError(err))
             .finally(() => setReady(true));
     }, [refresh]);
 
@@ -47,11 +48,11 @@ const PostPage: React.FC = () => {
     }
 
     return (
-        <div style={{ width: "100vw", maxWidth: "80vh", margin: "auto", textAlign: "left" }}>
+        <PageLayout>
             <MainPostItem post={posts[0]} />
             <NewCommentField post={posts[0]} setRefresh={setRefresh} />
-            <CommentList comments={comments} authorhidden={false} />
-        </div>
+            <MainCommentList comments={comments} />
+        </PageLayout>
     );
 };
 

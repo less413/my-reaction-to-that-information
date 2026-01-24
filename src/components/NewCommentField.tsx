@@ -1,6 +1,7 @@
 import Post from "../types/Post";
 import Comment from "../types/Comment";
 import { postComment } from "../api/comments";
+import { useAuth } from "../context/AuthContext";
 
 import React, { useState } from "react";
 import { Card, CardContent, IconButton, InputAdornment, TextField } from "@mui/material";
@@ -12,11 +13,18 @@ type Props = {
 };
 
 const NewCommentField: React.FC<Props> = ({ post, setRefresh }) => {
+    const { currentUser } = useAuth();
+    const canPost = currentUser !== null;
+
+    if (!canPost) {
+        return <></>;
+    }
+
     const [text, setText] = useState("");
     const [ready, setReady] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    async function send(): Promise<void> {
+    async function handleButtonClick(): Promise<void> {
         setReady(false);
         const c: Comment = {
             cid: 0,
@@ -28,12 +36,12 @@ const NewCommentField: React.FC<Props> = ({ post, setRefresh }) => {
         postComment(c)
             .then(() => setText(""))
             .then(() => setRefresh((x) => !x))
-            .catch((err) => setError(err.message))
+            .catch((err) => setError(err))
             .finally(() => setReady(true));
     }
 
     return (
-        <Card sx={{ marginBottom: "0.5rem", marginLeft: "1rem", marginRight: "1rem" }}>
+        <Card className={"main-card"}>
             <CardContent>
                 <TextField
                     value={text}
@@ -45,7 +53,7 @@ const NewCommentField: React.FC<Props> = ({ post, setRefresh }) => {
                     InputProps={{
                         endAdornment: text && (
                             <InputAdornment position="end">
-                                <IconButton onClick={send} disabled={!ready}>
+                                <IconButton onClick={handleButtonClick} disabled={!ready}>
                                     <SendIcon />
                                 </IconButton>
                             </InputAdornment>

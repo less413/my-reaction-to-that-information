@@ -9,7 +9,7 @@ type Props = {
 
 const MainUserItem: React.FC<Props> = ({ user }) => {
     return (
-        <Card sx={{ marginBottom: "0.5rem", marginLeft: "1rem", marginRight: "1rem" }}>
+        <Card className={"main-card"}>
             <CardContent>
                 <Typography variant="h6" color="textSecondary">
                     {"user"}

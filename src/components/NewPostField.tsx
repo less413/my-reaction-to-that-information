@@ -17,7 +17,7 @@ const NewPostField: React.FC<Props> = ({ topic }) => {
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
 
-    async function send(): Promise<void> {
+    async function handleCreateButtonClick(): Promise<void> {
         setReady(false);
         const p: Post = {
             pid: 0,
@@ -29,12 +29,12 @@ const NewPostField: React.FC<Props> = ({ topic }) => {
         };
         postPost(p)
             .then((ids) => navigate("/posts/" + ids[0].id))
-            .catch((err) => setError(err.message))
+            .catch((err) => setError(err))
             .finally(() => setReady(true));
     }
 
     return (
-        <Card sx={{ marginBottom: "0.5rem", marginLeft: "1rem", marginRight: "1rem" }}>
+        <Card className={"main-card"}>
             <CardContent>
                 <Stack spacing={2}>
                     <Typography variant="h5" color="textPrimary" gutterBottom>
@@ -52,7 +52,7 @@ const NewPostField: React.FC<Props> = ({ topic }) => {
                         multiline
                         fullWidth
                         minRows={4}
-                        label="content (optional)"
+                        label="content"
                         helperText={error}
                     />
                 </Stack>
@@ -61,7 +61,11 @@ const NewPostField: React.FC<Props> = ({ topic }) => {
                 <Button size="small" onClick={() => navigate("/topics/" + topic.topicname)}>
                     {"Cancel"}
                 </Button>
-                <Button size="small" onClick={send} disabled={!ready || titleText.length == 0}>
+                <Button
+                    size="small"
+                    onClick={handleCreateButtonClick}
+                    disabled={!ready || titleText.length == 0 || text.length == 0}
+                >
                     {"Post!"}
                 </Button>
             </CardActions>

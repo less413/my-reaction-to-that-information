@@ -1,6 +1,6 @@
+import PageLayout from "../components/PageLayout";
 import Topic from "../types/Topic";
 import MainTopicItem from "../components/MainTopicItem";
-// import Post from "../types/Post";
 import NewPostField from "../components/NewPostField";
 import { getTopics } from "../api/topics";
 
@@ -22,7 +22,7 @@ const PostCreationPage: React.FC = () => {
         }
         getTopics(topicname)
             .then(setTopics)
-            .catch((err) => setError(err.message))
+            .catch((err) => setError(err))
             .finally(() => setReady(true));
     }, []);
 
@@ -37,10 +37,10 @@ const PostCreationPage: React.FC = () => {
     }
 
     return (
-        <div style={{ width: "100vw", maxWidth: "80vh", margin: "auto", textAlign: "left" }}>
+        <PageLayout>
             <MainTopicItem topic={topics[0]} />
             <NewPostField topic={topics[0]} />
-        </div>
+        </PageLayout>
     );
 };
 

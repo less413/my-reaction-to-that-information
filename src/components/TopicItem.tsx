@@ -10,7 +10,7 @@ type Props = {
 
 const TopicItem: React.FC<Props> = ({ topic }) => {
     return (
-        <Card sx={{ marginBottom: "0.5rem", marginLeft: "1rem", marginRight: "1rem" }}>
+        <Card className={"main-card"}>
             <CardActionArea component={Link} to={"/topics/" + topic.topicname}>
                 <CardContent>
                     <Typography variant="h5" color="textPrimary">

@@ -1,17 +1,12 @@
-import Topic from "../types/Topic";
 import { useAuth } from "../context/AuthContext";
 
 import React from "react";
 import { Link } from "react-router-dom";
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 
-type Props = {
-    topic: Topic;
-};
-
-const NewPostField: React.FC<Props> = ({ topic }) => {
+const NewTopicButton: React.FC = () => {
     const { currentUser } = useAuth();
-    const canPost = currentUser !== null;
+    const canPost = currentUser !== null && currentUser.role == "admin";
 
     if (!canPost) {
         return <></>;
@@ -19,10 +14,10 @@ const NewPostField: React.FC<Props> = ({ topic }) => {
 
     return (
         <Card className={"main-card"}>
-            <CardActionArea component={Link} to={"/topics/" + topic.topicname + "/newpost"}>
+            <CardActionArea component={Link} to={"/newtopic"}>
                 <CardContent>
                     <Typography variant="h6" color="textPrimary">
-                        {"write a new post?"}
+                        {"create a new topic?"}
                     </Typography>
                 </CardContent>
             </CardActionArea>
@@ -30,4 +25,4 @@ const NewPostField: React.FC<Props> = ({ topic }) => {
     );
 };
 
-export default NewPostField;
+export default NewTopicButton;

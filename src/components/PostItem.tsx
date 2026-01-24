@@ -11,7 +11,7 @@ type Props = {
 
 const PostItem: React.FC<Props> = ({ post, authorhidden }) => {
     return (
-        <Card sx={{ marginBottom: "0.5rem", marginLeft: "1rem", marginRight: "1rem" }}>
+        <Card className={"main-card"}>
             <CardActionArea component={Link} to={"/posts/" + post.pid}>
                 <CardContent>
                     {authorhidden ? (

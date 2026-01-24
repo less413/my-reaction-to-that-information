@@ -1,3 +1,4 @@
+import PageLayout from "../components/PageLayout";
 import Post from "../types/Post";
 import Comment from "../types/Comment";
 import User from "../types/User";
@@ -31,9 +32,9 @@ const UserPage: React.FC = () => {
                 setPosts(posts.sort((a, b) => b.pdate.valueOf() - a.pdate.valueOf())); // most recent first
                 setComments(comments.sort((a, b) => b.cdate.valueOf() - a.cdate.valueOf())); // most recent first
             })
-            .catch((err) => setError(err.message))
+            .catch((err) => setError(err))
             .finally(() => setReady(true));
-    }, []);
+    }, [username]);
 
     if (!ready) {
         return <div>{"BE PATIENT"}</div>;
@@ -52,10 +53,10 @@ const UserPage: React.FC = () => {
     }
 
     return (
-        <div style={{ width: "100vw", maxWidth: "80vh", margin: "auto", textAlign: "left" }}>
+        <PageLayout>
             <MainUserItem user={users[0]} />
             <UserTabs user={users[0]} posts={posts} comments={comments} />
-        </div>
+        </PageLayout>
     );
 };
 

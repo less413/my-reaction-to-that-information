@@ -1,5 +1,7 @@
+import PageLayout from "../components/PageLayout";
 import Topic from "../types/Topic";
 import TopicList from "../components/TopicList";
+import NewTopicButton from "../components/NewTopicButton";
 import { getTopics } from "../api/topics";
 
 import React, { useEffect, useState } from "react";
@@ -13,7 +15,7 @@ const Home: React.FC = () => {
         setReady(false);
         getTopics(undefined)
             .then(setTopics)
-            .catch((err) => setError(err.message))
+            .catch((err) => setError(err))
             .finally(() => setReady(true));
     }, []);
 
@@ -23,13 +25,14 @@ const Home: React.FC = () => {
     if (error) {
         return <div>{"oh no theres an error, here it is: " + error}</div>;
     }
-    if (!topics || topics.length === 0) {
+    if (topics === null) {
         return <div>{"no topic"}</div>;
     }
     return (
-        <div style={{ width: "100vw", maxWidth: "80vh", margin: "auto", textAlign: "left" }}>
+        <PageLayout>
+            <NewTopicButton />
             <TopicList topics={topics} />
-        </div>
+        </PageLayout>
     );
 };
 

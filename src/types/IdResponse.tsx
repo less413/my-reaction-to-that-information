@@ -1,5 +1,5 @@
 type IdResponse = {
-    id: number
+    id: number;
 };
 
 export default IdResponse;

@@ -1,3 +1,4 @@
+import PageLayout from "../components/PageLayout";
 import Topic from "../types/Topic";
 import MainTopicItem from "../components/MainTopicItem";
 import Post from "../types/Post";
@@ -28,7 +29,7 @@ const TopicPage: React.FC = () => {
                 setTopics(topics);
                 setPosts(posts.sort((a, b) => b.pdate.valueOf() - a.pdate.valueOf())); // most recent first
             })
-            .catch((err) => setError(err.message))
+            .catch((err) => setError(err))
             .finally(() => setReady(true));
     }, []);
 
@@ -46,11 +47,11 @@ const TopicPage: React.FC = () => {
     }
 
     return (
-        <div style={{ width: "100vw", maxWidth: "80vh", margin: "auto", textAlign: "left" }}>
+        <PageLayout>
             <MainTopicItem topic={topics[0]} />
             <NewPostButton topic={topics[0]} />
             <PostList posts={posts} authorhidden={false} />
-        </div>
+        </PageLayout>
     );
 };
 

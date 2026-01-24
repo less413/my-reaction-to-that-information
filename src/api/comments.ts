@@ -19,9 +19,17 @@ async function getCommentsByUser(uname: string): Promise<Comment[]> {
     return response.data.map(processDate);
 }
 
+async function deleteComment(cid: number): Promise<void> {
+    await api.delete("/comments", { params: { cid: cid } });
+}
+
 async function postComment(comment: Comment): Promise<IdResponse[]> {
     const response = await api.post("/comments", comment);
     return response.data;
 }
 
-export { getComment, getCommentsByPostId, getCommentsByUser, postComment };
+async function putComment(comment: Comment): Promise<void> {
+    await api.put("/comments", comment);
+}
+
+export { getComment, getCommentsByPostId, getCommentsByUser, deleteComment, postComment, putComment };
