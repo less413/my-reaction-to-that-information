@@ -12,7 +12,7 @@ const MainUserItem: React.FC<Props> = ({ user }) => {
         <Card className={"main-card"}>
             <CardContent>
                 <Typography variant="h6" color="textSecondary">
-                    {"user"}
+                    {user.role}
                 </Typography>
                 <Typography color="textPrimary" variant="h2">
                     {user.username}
